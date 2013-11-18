@@ -34,7 +34,7 @@ namespace :populate do
 	      youtube_id_long = video_post['id']
 	      youtube_id = video_post['id'].split('/').last
 
-	      puts youtube_id_longnaga 
+	      puts youtube_id_long2 
 	      puts youtube_id
 
 	      break
