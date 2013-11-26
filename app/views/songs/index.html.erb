@@ -1,0 +1,77 @@
+<h1>Listing songs</h1>
+
+<!-- SCM Music Player http://scmplayer.net -->
+<script type="text/javascript" src="http://scmplayer.net/script.js" 
+data-config="{'skin':'skins/black/skin.css',
+'volume':50,
+'autoplay':false,
+'shuffle':false,
+'repeat':1,
+'placement':'top',
+'showplaylist':false,
+'playlist':[
+   <% @songs.each do |songscm| %>
+     {'title':'<%= songscm.title %>', 'url':'<%= songscm.youtube_url %>'},
+    <% end %>
+    
+]}"
+
+ ></script>
+<!-- SCM Music Player script end -->
+
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Youtubeid</th>
+      <th>Posted</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+
+
+        <td>
+<span class="fa-stack fa-lg" id="play_button_<%= song.id %>" onclick="$('#pause_button').hide() && $(this).toggle() && $('#pause_button_<%= song.id %>').toggle() && SCM.play({title:'<%= song.title %>',url:'<%= song.youtube_url %>'});">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-play fa-stack-1x fa-inverse"></i>
+</span>
+<span class="fa-stack fa-lg" id="pause_button_<%= song.id %>" onclick="$(this).toggle() && $('#play_button_<%= song.id %>').toggle() && SCM.pause()" style="display: none">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-pause fa-stack-1x fa-inverse"></i>
+</span>
+          
+
+<!--           <button id="play_button_<%= song.id %>" onclick="$('.play_button').show() && $('.pause_button').hide() && $(this).toggle() && $('#pause_button_<%= song.id %>').toggle() && SCM.play({title:'<%= song.title %>',url:'<%= song.youtube_url %>'});" class="play_button">play</button>
+
+          <button id="pause_button_<%= song.id %>" onclick="$(this).toggle() && $('#play_button_<%= song.id %>').toggle() && SCM.pause()" style="display: none"
+            class="pause_button">pause</button> -->
+
+          <!--
+          <button onclick="SCM.next() && SCM.play();" >next</button>
+          <button onclick="SCM.previous() && SCM.play();">prev</button>
+        -->
+
+          <%= song.title %>  
+
+          </td>
+        <td><i class="fa fa-comments fa-2x"></i>  <i class="fa fa-external-link fa-2x"></i> <i class="fa fa-thumbs-o-up fa-2x"></i></td>
+        <td><%= distance_of_time_in_words(Time.now, song.created_at) %> ago</td>
+        <td><%= link_to 'Show', song %></td>
+        <td><%= link_to 'Edit', edit_song_path(song) %></td>
+        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Song', new_song_path %>
