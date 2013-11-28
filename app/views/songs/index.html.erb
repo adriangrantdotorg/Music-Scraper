@@ -1,4 +1,9 @@
-<h1>Listing songs</h1>
+ <%= render 'header' %>
+
+ <h1>Listing songs</h1>
+
+
+
 
 <!-- SCM Music Player http://scmplayer.net -->
 <script type="text/javascript" src="http://scmplayer.net/script.js" 
@@ -7,19 +12,16 @@ data-config="{'skin':'skins/black/skin.css',
 'autoplay':false,
 'shuffle':false,
 'repeat':1,
-'placement':'top',
+'placement':'bottom',
 'showplaylist':false,
 'playlist':[
    <% @songs.each do |songscm| %>
      {'title':'<%= songscm.title %>', 'url':'<%= songscm.youtube_url %>'},
     <% end %>
     
-]}"
-
- ></script>
+]}">
+ </script>
 <!-- SCM Music Player script end -->
-
-
 
 <table class="table table-hover">
   <thead>
@@ -39,6 +41,9 @@ data-config="{'skin':'skins/black/skin.css',
 
 
         <td>
+
+
+
 <span class="fa-stack fa-lg" id="play_button_<%= song.id %>" onclick="$('#pause_button').hide() && $(this).toggle() && $('#pause_button_<%= song.id %>').toggle() && SCM.play({title:'<%= song.title %>',url:'<%= song.youtube_url %>'});">
   <i class="fa fa-circle fa-stack-2x"></i>
   <i class="fa fa-play fa-stack-1x fa-inverse"></i>

@@ -10,6 +10,10 @@ gem 'sqlite3'
 gem 'sass-rails', '~> 4.0.0'
 gem 'json', '1.8.0'
 gem 'nokogiri', '~> 1.6.0' 
+gem 'devise', '~> 3.2.2'
+gem 'omniauth' 
+gem 'omniauth-facebook'
+
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

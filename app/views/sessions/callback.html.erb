@@ -1,0 +1,9 @@
+<script type="text/javascript">
+  if (window.opener) {
+    window.opener.location = '<%= @return_to %>';
+  }
+  else {
+    window.location = '<%= @return_to %>';
+  }
+  return window.close();
+</script>
