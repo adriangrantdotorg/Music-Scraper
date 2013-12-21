@@ -1,0 +1,7 @@
+
+rake populate:fetch_rd_songs
+rake populate:fetch_rr_songs
+rake populate:fetch_xxl_songs
+rake populate:fetch_ahh_songs
+rake populate:fetch_nr_songs
+rake populate:fetch_pf_songs

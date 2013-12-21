@@ -1,0 +1,98 @@
+ <%= render 'header' %>
+
+<!-- SCM Music Player http://scmplayer.net -->
+<script type="text/javascript" src="http://scmplayer.net/script.js" 
+data-config="{'skin':'skins/black/skin.css',
+'volume':50,
+'autoplay':false,
+'shuffle':false,
+'repeat':1,
+'placement':'bottom',
+'showplaylist':false,
+'playlist':[
+     {'title':'<%= @song.title %>', 'url':'<%= @song.youtube_url %>'},
+    
+]}">
+ </script>
+<!-- SCM Music Player script end -->
+
+<div class="well">
+
+<h2>Song Vote Details</h2>
+
+<%=
+  @song.votes.size 
+%>
+ <hr/ >
+ <h3>User That Likes</h3>
+<%=
+ # u = current_user 
+  	
+  #  u.votes.up.for_type(Song).votables
+  	
+  debug @song.votes.up.by_type(User).voters
+
+  #u.likes @song
+  # @user.dislikes @comment2
+
+%>
+
+
+</div>
+<!--  <strong>Current User</strong>
+ -->
+<!--   <%= 
+  u = current_user
+  debug u
+  %>
+ -->
+
+  <% if user_signed_in? %>
+      <% if current_user.voted_for? @song %>
+        <%= link_to '<i class="fa fa-star" title="Click to Unlike"></i>Liked Already'.html_safe, {:controller =>"songs", :action => "unstarred", :id => @song.id}, method: :put %>
+    <% else %>
+      <%= link_to '<i class="fa fa-star-o"></i>'.html_safe, {:controller =>"songs", :action => "starred", :id => @song.id}, method: :put %>
+    <% end %> 
+    <% else %>
+    <div class="alert alert-warning">Sign In to Favorite</div>
+  <% end %> 
+
+<%=  link_to "like", {:controller =>"songs", :action => "starred", :id => @song.id}, :class => 'btn btn-success', method: :put %>
+
+
+<%=  link_to "dislike", {:controller =>"songs", :action => "unstarred", :id => @song.id}, :class => 'btn btn-danger', method: :put %> 
+
+
+<hr />
+<%=  
+# <h2>User Vote Details</h2>
+
+# @user.find_liked_items
+# @user.find_disliked_items
+
+%> 
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @song.title %>
+</p>
+
+<p>
+  <strong>Youtubeid:</strong>
+  <%= @song.youtubeid %>
+</p>
+
+<p>
+  <strong>Bloglink:</strong>
+  <%= @song.bloglink %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @song.source %>
+</p>
+<%= link_to 'Show', song_path(@song) %>
+<%= link_to 'Edit', edit_song_path(@song) %> |
+<%= link_to 'Back', songs_path %>
+

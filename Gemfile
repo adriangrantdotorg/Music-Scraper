@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
@@ -13,6 +15,8 @@ gem 'nokogiri', '~> 1.6.0'
 gem 'devise', '~> 3.2.2'
 gem 'omniauth' 
 gem 'omniauth-facebook'
+gem 'acts_as_votable', '~> 0.8.0'
+gem 'will_paginate', '~> 3.0'
 
 
 # Use Uglifier as compressor for JavaScript assets

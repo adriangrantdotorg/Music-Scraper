@@ -1,5 +1,9 @@
  <%= render 'header' %>
-
+<%=
+ # u = current_user
+ # debug u.find_liked_items  
+  
+%>
 <!-- SCM Music Player http://scmplayer.net -->
 <script type="text/javascript" src="http://scmplayer.net/script.js" 
 data-config="{'skin':'skins/black/skin.css',
@@ -10,31 +14,30 @@ data-config="{'skin':'skins/black/skin.css',
 'placement':'bottom',
 'showplaylist':false,
 'playlist':[
-     {'title':'<%= @song.title %>', 'url':'<%= @song.youtube_url %>'},
+   <%  u = current_user  
+   u.find_liked_items.each do |songfaves| %>
+     {'title':'<%= songfaves.title %>', 'url':'<%= songfaves.youtube_url %>'},
+    <% end %>
     
 ]}">
  </script>
 <!-- SCM Music Player script end -->
-<p id="notice"><%= notice %></p>
+<%  u = current_user  
+   u.find_liked_items.each do |song| %>
 
 <div class="row">
   <div id="acetable">
-        <!-- User Signed In -->
-          <% if user_signed_in? %> 
-          <% else %> 
               <table class="table" id="acehead" >
               <tbody>
               <tr>
-                <td><h1><i class="fa fa-music"></i>  from your <i class="fa fa-heart"></i> blogs</h1></td>
-                <td class="info" style="vertical-align: inherit !important;" ><%= link_to image_tag("/assets/fbicons/active_200.png"), user_omniauth_authorize_path(:facebook), :id => "signin", 
-                :data => {:width => 600, :height => 400} %></td>
-                </tr>
-             
-                </tr>
-              </tbody>
+                <td><h1>My Favorites</h1></td>
+               </tr>
+               </tbody>
                </table>
-          <% end %> 
-          <table class="table table-hover">
+
+        <td>
+
+  <table class="table table-hover">
   <thead>
     <tr>
       <th>Title</th>
@@ -46,7 +49,7 @@ data-config="{'skin':'skins/black/skin.css',
   </thead>
   <tbody>
     <tr>
-        <td>
+
 <span class="fa-stack fa-lg" id="play_button_<%= @song.id %>" onclick="$('#pause_button').hide() && $(this).toggle() && $('#pause_button_<%= @song.id %>').toggle() && SCM.play({title:'<%= @song.title %>',url:'<%= @song.youtube_url %>'});">
   <i class="fa fa-circle fa-stack-2x"></i>
   <i class="fa fa-play fa-stack-1x fa-inverse"></i>
@@ -56,32 +59,27 @@ data-config="{'skin':'skins/black/skin.css',
   <i class="fa fa-pause fa-stack-1x fa-inverse"></i>
 </span>
                     <%= @song.title %>  
+                                        
+
   </td>
         <td><%= link_to '<i class="fa fa-comments fa-2x" title="Comments"></i>'.html_safe, @song %>   
 
-    <% if user_signed_in? %>
-        <% if current_user.voted_for? @song %>
-          <%= link_to '<i class="fa fa-star fa-2x" title="Remove From Favorites"></i>'.html_safe, {:controller =>"songs", :action => "unstarred", :id => @song.id}, method: :put %>
-      <% else %>
-        <%= link_to '<i class="fa fa-star-o fa-2x" title="Save As Favorite"></i>'.html_safe, {:controller =>"songs", :action => "starred", :id => @song.id}, method: :put %>
-      <% end %> 
-      <% else %>
-        <i class="fa fa-star-o fa-2x" title="Sign In To Save to Favorites" ></i>
-      <% end %> 
+   
+          <%= link_to '<i class="fa fa-star fa-2x" title="Remove From Favorites"></i>'.html_safe, {:controller =>"@song", :action => "unstarredhome", :id => @song.id}, method: :put %>
+     
 <%= link_to '<i class="fa fa-external-link fa-2x" title="View Original Post"></i>'.html_safe, @song.bloglink, target: "_blank" %>
 <%=  link_to '<i class="fa fa-cloud-download fa-2x" title="Download"></i>'.html_safe, @song.google_url, target: "_blank" %>
+
         </td>
         <td><%= distance_of_time_in_words(Time.now, @song.created_at) %> ago</td>
-                <td>
- <div class="fb-like" data-href="<%= request.original_url %>" data-width="200" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
-          </td>
       </tr>
  
   </tbody>
 </table>
-      <div class="well"> 
-      <div class="fb-comments" data-href="<%= request.original_url %>" data-numposts="5" data-colorscheme="dark"></div>
-      </div>
-</div> <!-- div row -->
-</div> <!-- div acetable -->
+<% end %>
+</div>
+</div>
+
+
+ 

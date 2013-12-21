@@ -1,11 +1,67 @@
-class SongsController < ApplicationController
-  before_action :set_song, only: [:show, :edit, :update, :destroy]
 
+class SongsController < ApplicationController
+  before_action :set_song, only: [:show, :edit, :update, :destroy, :starred, :unstarred, :starredhome, :unstarredhome, :unstarredatfaves, :starredsource, :unstarredsource]
+
+    # acts_as_votable
+    def starred
+      @song.vote_by current_user
+      redirect_to @song
+    end
+
+    def unstarred
+      @song.unliked_by current_user
+      redirect_to @song
+    end
+    def starredsource
+      @song.vote_by current_user
+      source_redirect = @song.source
+      redirect_to :controller =>"songs", :action => "source", :source => source_redirect
+    end
+
+    def unstarredsource
+      @song.unliked_by current_user
+      source_redirect = @song.source
+      redirect_to :controller =>"songs", :action => "source", :source => source_redirect
+    end
+
+    def starredhome
+      @song.vote_by current_user
+      redirect_to root_path
+    end
+
+    def unstarredhome
+      @song.unliked_by current_user
+      redirect_to root_path
+    end
+    def unstarredatfaves
+      @song.unliked_by current_user
+      redirect_to "/myfaves" 
+    end
+    def myfaves
+    # @songs = Song.page(params[:page]).order('created_at DESC')
+    # @songs.per_page = 5
+    require 'will_paginate/array'
+    #@user_likes = current_user.find_liked_items.per_page(5)
+
+    @user_likes = current_user.find_liked_items.paginate(:page => params[:page], :per_page => 20)
+
+    end
+    def source
+      if params[:source] 
+        @songs = Song.where(:source => params[:source]).paginate(:page => params[:page], :per_page => 20)
+ 
+        else 
+      end
+    end
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.all(order:'created_at desc')
+    # @songs = Song.all(order:'created_at desc')
+    #Pagination
+    @songs = Song.page(params[:page]).order('created_at DESC')
+    @songs.per_page = 20
   end
+
 
   # GET /songs/1
   # GET /songs/1.json
@@ -65,10 +121,12 @@ class SongsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_song
       @song = Song.find(params[:id])
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def song_params
       params.require(:song).permit(:title, :youtubeid, :bloglink, :source)
     end
+
 end
