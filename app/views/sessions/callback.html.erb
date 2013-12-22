@@ -1,0 +1,14 @@
+<script type="text/javascript">
+  // if (window.opener) {
+  //   window.opener.location = '<%= @return_to %>';
+  //     return window.close();
+
+  // }
+  // else {
+  //   window.location = '<%= @return_to %>';
+  // }
+  // return window.close();
+
+  window.opener.location = '<%= @after_sign_in_url %>';
+  window.close();
+</script>

@@ -1,0 +1,58 @@
+<h1>Listing songs</h1>
+
+<!-- SCM Music Player http://scmplayer.net -->
+<script type="text/javascript" src="http://scmplayer.net/script.js" 
+data-config="{'skin':'skins/black/skin.css',
+'volume':50,
+'autoplay':false,
+'shuffle':false,
+'repeat':1,
+'placement':'top',
+'showplaylist':true,
+'playlist':[
+   <% @songs.each do |songscm| %>
+     {'title':'<%= songscm.title %>', 'url':'<%= songscm.youtube_url %>'},
+    <% end %>
+    
+]}"
+
+ ></script>
+<!-- SCM Music Player script end -->
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Youtubeid</th>
+      <th>Bloglink</th>
+      <th>Source</th>
+      <th>Created At</th>
+      <th>Youtube URL</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+        <td><button onclick="SCM.play({title:'<%= song.title %>',url:'<%= song.youtube_url %>'});">play</button><button onclick="SCM.pause()">pause</button><button onclick="SCM.next() && SCM.play();">next</button><button onclick="SCM.previous() && SCM.play();">prev</button><%= song.title %>  </td>
+        <td><%= song.youtubeid %></td>
+        <td><%= song.bloglink %></td>
+        <td><%= song.source %></td>
+        <td><%= distance_of_time_in_words(Time.now, song.created_at) %> ago</td>
+        <td><%= song.youtube_url %></td>
+        <td><%= link_to 'Show', song %></td>
+        <td><%= link_to 'Edit', edit_song_path(song) %></td>
+        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Song', new_song_path %>

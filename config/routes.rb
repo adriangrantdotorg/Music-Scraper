@@ -1,9 +1,66 @@
 MusicScraper::Application.routes.draw do
+  
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  
+  resources :songs do
+
+    collection do 
+      get "source"
+      get "search"
+    end
+
+    member do 
+      #Gets the Actions in the Songs Controller
+      get "starred"
+      get "unstarred"
+      get "starredhome"
+      get "unstarredhome"
+      get "unstarredatfaves"
+      get "starredsource"
+      get "unstarredsource"
+      get "myfaves"
+    end
+  end
+
+
+  # get '/songs/:id/:action' => 'songs#starred' 
+  # get '/songs/:id/:action' => 'songs#unstarred'
+  
+  #Filter Songs By Blog
+     #** WORKS
+   #  get '/songs/source/www.inflexwetrust.com' => 'songs#source'
+    #  Close
+
+ # get 'songs_source', :controller => 'songs', :action => 'source'
+  #get '/songs/source/:source' => 'songs#source' #, :as => source
+ # get '/songs/source/', :controller => 'songs', :action => 'source'
+  # get '/songs/source/rapradar', :controller => 'songs', :action => 'Song.source = "rapradar.com"'
+
+
+  match 'users/sign_out', to: 'sessions#destroy', as: 'signout', via: [:get, :post]
+  #get '/users/sign_out' => 'sessions#destroy', as: 'sign_out'
+
+  # resources :songs do
+  #   member do
+  #     get "like", => "songs#starred"
+  #     get "dislike", => "songs#unstarred"
+  #   end
+  # end
+
+  get "pages/home"
+  get "/about" => "songs#about"
+  get "/myfaves" => 'songs#myfaves'
+
+
+  get 'custom_login' => 'songs#index'
+  # You can have the root of your site routed with "root"
+  root 'songs#index'
+  #get '/show' =>  'songs#show'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,92 @@
+<style type="text/css">
+    body {
+/*      padding-top: 30px;
+*/    
+      background-image:url("/assets/Hipster-Tumblr-Wallpaper.jpg");
+     background-repeat: repeat;
+     
+/*           background-color: white;
+*/     }
+
+    #acetable  {
+      /*padding-left: 60px;
+      padding-right: 60px;*/
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      padding-bottom: 24px;
+      padding-top: 24px;
+    }
+    #acehead{
+      background-color: #2A9FD6;
+
+    }
+    .fb-comments, .fb-comments iframe[style] {
+      width: 100% !important;
+    }
+/*    a, a:hover, a:focus {color:#2A9FD6;text-decoration:none;background-color: inherit;}
+*/
+/*    i {color: #2A9FD6;}
+*/    
+i:visited {color: inherit;}
+      i:hover{background-color: transparent !important;}
+.fa-comments, .fa-star-o, .fa-external-link, .fa-cloud-download {color:#2A9FD6;}
+.next_page, .previous_page{display: none;}
+
+</style>
+<div role="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+<!--           <%= link_to image_tag("/assets/Logo-600-words.png",  :width => 50,  :alt => "logo"), "/", :class => 'navbar-brand', :title => 'Motion15.com' %> -->
+        </div>
+        <%= link_to 'M15', root_url, { :class=>"navbar-brand" }  %>
+        
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+                        <li><%= link_to 'About', {:controller =>"songs", :action => "about"} %>
+                        </li>
+                        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Filter <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                          <li class="dropdown-header">Rap</li>
+                            <li><%= link_to 'AllHipHop', {:controller =>"songs", :action => "source", :source => 'allhiphop'} %></li>                 
+                            <li><%= link_to 'Funk Flex', {:controller =>"songs", :action => "source", :source => 'inflexwetrust'} %></li>
+                            <li><%= link_to 'Nah Right', {:controller =>"songs", :action => "source", :source => 'nahright'} %></li>
+                            <li><%= link_to 'Rap Radar', {:controller =>"songs", :action => "source", :source => 'rapradar'} %></li>
+                            <li><%= link_to 'Rap Dose', {:controller =>"songs", :action => "source", :source => 'rapdose'} %></li>
+                            <li><%= link_to 'XXL', {:controller =>"songs", :action => "source", :source => 'xxl'} %></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Misc</li>
+                            <li><%= link_to 'Hype Trak', {:controller =>"songs", :action => "source", :source => 'hypetrak'} %></li>  
+                            <li><%= link_to 'Pitchfork', {:controller =>"songs", :action => "source", :source => 'pitchfork'} %></li>                          
+                            <li><%= link_to 'Suggest a Blog!', {:controller =>"songs", :action => "about"} %></li>
+                          </ul>
+                        </li>
+              <!-- User Signed In -->
+          <% if user_signed_in? %> 
+            <li> <%= link_to 'My <i class="fa fa-star" ></i>\'s'.html_safe, "/myfaves", :title =>"My Favorites" %></li>
+                      <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+
+          <% else %> 
+           <!--  <li><%= link_to image_tag("/assets/fbicons/active_200.png"), user_omniauth_authorize_path(:facebook), :id => "signin", 
+            :data => {:width => 600, :height => 400} %></li> -->
+          <% end %> 
+
+
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
